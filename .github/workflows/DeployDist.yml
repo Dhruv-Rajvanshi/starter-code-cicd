@@ -1,7 +1,13 @@
 name: Deploy Dist
 
-on: [push,workflow_dispatch]
-
+on: #[push,workflow_dispatch]
+    push:
+        branches:
+            - main
+        paths-ignore:
+            - '.github/workflows/*'
+            - README.md
+    workflow_dispatch:       
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -41,7 +47,7 @@ jobs:
               with:
                   path: ~/.npm
                   key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}         #ubuntu-node-hashvalue
-                  
+
             - name: Install Dependencies
               run: npm install ci
 
